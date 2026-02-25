@@ -3,7 +3,7 @@ Arabic Dictionary Chrome extension based on open-source dictionary data.
 Just hover your cursor over an Arabic word and the translation pops up!
 
 # Update
-I've somehow managed, using DeepSeek AI, to update this happy extension. I will list the changes that were undertaken soon. The most important apparently, according to the AI himself are: copy-paste options for all or specific definitions, data structure optimisations, caching system, and DOM processing optimisations. Unfortuantely, I don't know what most of this all means but the extension (mostly) does work!
+I've somehow managed, using DeepSeek AI, to update this happy extension. I will list the changes that were undertaken soon. The most important apparently, according to the AI himself are: copy-paste options for individual or all definitions, data structure optimisations, caching system, and DOM processing optimisations. Unfortuantely, I don't know what most of this all means but the extension (mostly) does work!
 
 ## Arabic Dictionary in action!
 ![screenshot-image](https://github.com/haikalzain/arabic-dict-chrome/blob/master/images/screenshot.png)
