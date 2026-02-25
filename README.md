@@ -6,6 +6,10 @@ Arabic Dictionary Chrome/Firefox extension based on open-source dictionary data 
 
 Just hover your cursor over an Arabic word and the translation pops up! Left-click to save the definition to your clipboard.
 
+
+https://github.com/user-attachments/assets/04adb983-7e4d-4894-9586-5637571d75cb
+
+
 ## Recommended Anki Workflow:
 1. Hover over an Arabic word
 2. Press a number key (1-9) to copy a specific definition, or left-click to copy all definitions
@@ -50,11 +54,6 @@ I've somehow managed, using DeepSeek AI, to update this extension. Here are the 
 ## Arabic Dictionary in action!
 ![screenshot-image](https://github.com/haikalzain/arabic-dict-chrome/blob/master/images/screenshot.png)
 
-## Update Screenshots
-
-<img width="623" height="473" alt="Definition popup" src="https://github.com/user-attachments/assets/f9f53305-7ec5-4e02-b044-7becead2571f" />
-<img width="583" height="374" alt="Copy notification" src="https://github.com/user-attachments/assets/36ff3440-c8d2-4c06-aa84-f9f746f9f756" />
-<img width="596" height="492" alt="Anki panel with queue" src="https://github.com/user-attachments/assets/e42adad7-4420-43b7-9879-14351943a15e" />
 
 ## Usage
 
