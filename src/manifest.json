@@ -2,19 +2,33 @@
   "manifest_version": 2,
   "name": "Arabic Dictionary",
   "version": "1.1",
-  "description": "Look Up Arabic Words on the Fly!",
-  "permissions": ["storage"],
+  "description": "Look up Arabic words and create Anki flashcards",
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "alarms",
+    "clipboardRead",
+    "clipboardWrite",
+    "*://localhost/*",
+    "http://localhost:8765/"
+  ],
   "browser_action": {
     "default_popup": "panel.html",
     "default_title": "Arabic Dictionary"
   },
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "content_security_policy": "script-src 'self'; object-src 'self'; connect-src http://localhost:8765",
   "web_accessible_resources": [
     "data/tableab",
     "data/tableac",
     "data/tablebc",
     "data/dictprefixes",
     "data/dictstems",
-    "data/dictsuffixes"
+    "data/dictsuffixes",
+    "anki/anki-queue.js"
   ],
   "icons": {
     "48": "icon48.png",
@@ -22,7 +36,12 @@
   },
   "content_scripts": [{
     "matches": ["<all_urls>"],
-    "js": ["main.js", "libs/opentip-native.min.js"],
-    "css": ["libs/opentip.css", "main.css"]
+    "js": [
+      "main.js",
+      "libs/opentip-native.min.js",
+      "anki/anki.js"
+    ],
+    "css": ["libs/opentip.css", "main.css"],
+    "run_at": "document_idle"
   }]
 }

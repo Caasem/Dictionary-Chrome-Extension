@@ -1,6 +1,7 @@
 // ==================== Configuration & Constants ====================
 const CONFIG = {
-    CACHE_SIZE: 1000,
+    CACHE_SIZE: 200, // Reduced from 1000 for better memory usage
+    CACHE_EXPIRY: 3600000, // 1 hour in milliseconds
     DOM_CHUNK_SIZE: 50,
     DEBOUNCE_DELAY: 200,
     STORAGE_KEYS: {
@@ -53,37 +54,17 @@ function saveSettings(newSettings) {
 }
 
 function applySettings() {
-    // Apply dark mode to document
     if (settings.darkMode) {
         document.documentElement.classList.add(CONFIG.CLASS_NAMES.DARK_MODE);
     } else {
         document.documentElement.classList.remove(CONFIG.CLASS_NAMES.DARK_MODE);
     }
     
-    // Handle extension enabled/disabled
     if (settings.extensionEnabled) {
         enableExtension();
     } else {
         disableExtension();
     }
-    
-    // Update any existing popups with new size/font settings
-    var containers = document.querySelectorAll('.' + CONFIG.CLASS_NAMES.DEFINITION_CONTAINER);
-    containers.forEach(function(container) {
-        container.style.fontSize = settings.popupFontSize + 'px';
-        container.style.width = settings.popupWidth + 'px';
-        container.style.maxHeight = settings.popupMaxHeight + 'px';
-        
-        if (settings.darkMode) {
-            container.style.backgroundColor = '#2d2d2d';
-            container.style.color = '#e0e0e0';
-            container.style.borderColor = '#444';
-        } else {
-            container.style.backgroundColor = '';
-            container.style.color = '';
-            container.style.borderColor = '';
-        }
-    });
 }
 
 // ==================== Extension Toggle Functions ====================
@@ -201,41 +182,20 @@ function createSettingsPanel() {
     });
 }
 
-
 // ==================== Message Listener for Settings ====================
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    console.log('Message received:', request);
-    
-    if (request.action === 'ping') {
-        sendResponse({status: 'alive'});
-        return true;
-    }
-    
     if (request.action === 'openSettings') {
         createSettingsPanel();
         sendResponse({status: 'opened'});
-        return true;
-    }
-    
-    if (request.action === 'settingsUpdated') {
-        console.log('Settings updated:', request.settings);
-        
-        // Update settings
+    } else if (request.action === 'settingsUpdated') {
+        console.log('Settings updated from panel:', request.settings);
         settings = { ...settings, ...request.settings };
-        
-        // Apply settings immediately
         applySettings();
-        
-        // Save to storage
         chrome.storage.local.set({ [CONFIG.STORAGE_KEYS.SETTINGS]: settings });
-        
-        // Show feedback
-        showCopyFeedback('Settings applied!');
-        
         sendResponse({status: 'applied'});
-        return true;
+    } else if (request.action === 'ping') {
+        sendResponse({status: 'alive'});
     }
-    
     return true;
 });
 
@@ -413,12 +373,19 @@ function removeDiacriticsBuckwalter(word) {
     return word.replace(diacriticsRegex, "");
 }
 
-// ==================== Core Lookup with Caching ====================
+// ==================== Core Lookup with Optimized Caching ====================
 const lookupCache = new Map();
 
 function lookup(word) {
+    // Check cache with expiry
     if (lookupCache.has(word)) {
-        return lookupCache.get(word);
+        const entry = lookupCache.get(word);
+        if (Date.now() - entry.timestamp < CONFIG.CACHE_EXPIRY) {
+            return entry.data;
+        } else {
+            // Expired - remove from cache
+            lookupCache.delete(word);
+        }
     }
     
     var processedWord = removeDiacriticsBuckwalter(transliterate(word));
@@ -435,11 +402,25 @@ function lookup(word) {
         }
     }
     
+    // Manage cache size with LRU-like behavior
     if (lookupCache.size >= CONFIG.CACHE_SIZE) {
-        const firstKey = lookupCache.keys().next().value;
-        lookupCache.delete(firstKey);
+        // Find and remove oldest entry
+        let oldestKey = null;
+        let oldestTime = Infinity;
+        for (let [key, entry] of lookupCache.entries()) {
+            if (entry.timestamp < oldestTime) {
+                oldestTime = entry.timestamp;
+                oldestKey = key;
+            }
+        }
+        if (oldestKey) lookupCache.delete(oldestKey);
     }
-    lookupCache.set(word, data);
+    
+    // Store with timestamp
+    lookupCache.set(word, {
+        data: data,
+        timestamp: Date.now()
+    });
     
     return data;
 }
@@ -614,11 +595,14 @@ function showCopyFeedback(text) {
 function formatAllDefinitions(word, data) {
     var lines = [];
     lines.push(word + ' (' + data.length + ' definitions)');
-    lines.push('');
+    lines.push(''); // Empty line for spacing after header
     
     for (var i = 0; i < data.length; i++) {
         var entry = data[i];
         lines.push((i + 1) + '. ' + entry.word + ': ' + entry.def + ' (root: ' + entry.root + ')');
+        if (i < data.length - 1) {
+            lines.push(''); // Add blank line between definitions
+        }
     }
     
     if (settings.historyEnabled) {
@@ -648,6 +632,7 @@ function addToHistory(word, data, selectedIndex) {
     
     settings.history.unshift(historyEntry);
     
+    // Limit history size
     if (settings.history.length > 100) {
         settings.history = settings.history.slice(0, 100);
     }
@@ -728,21 +713,60 @@ function createDefinitionsHTML(word, data) {
     return str;
 }
 
+// ==================== Unload inactive popups ====================
+function setupPopupCleanup() {
+    // Listen for popup hide events and clean up after delay
+    const observer = new MutationObserver(function(mutations) {
+        mutations.forEach(function(mutation) {
+            if (mutation.type === 'attributes' && 
+                mutation.attributeName === 'class' &&
+                mutation.target.classList.contains(CONFIG.CLASS_NAMES.DEFINITION_CONTAINER)) {
+                
+                if (mutation.target.classList.contains('ot-hidden')) {
+                    // Popup hidden - schedule cleanup
+                    setTimeout(function(popup) {
+                        return function() {
+                            // Find and remove associated data
+                            for (let [elem, data] of activePopups.entries()) {
+                                if (elem._opentip && elem._opentip.container === popup) {
+                                    // Mark for cleanup but keep in cache
+                                    console.log('Cleaning up popup data for:', elem.textContent);
+                                }
+                            }
+                        };
+                    }(mutation.target), 5000);
+                }
+            }
+        });
+    });
+    
+    observer.observe(document.body, {
+        attributes: true,
+        subtree: true,
+        attributeFilter: ['class']
+    });
+}
+
 // ==================== Precise Hover Tracking ====================
 var currentlyHoveredElement = null;
 var hoveredElementData = null;
 var activePopups = new Map();
 
+// Debounced hover handler
+let hoverTimeout = null;
 document.addEventListener('mouseover', function(event) {
     if (!settings.extensionEnabled) return;
     
-    var target = event.target;
-    if (target.classList && target.classList.contains(CONFIG.CLASS_NAMES.WRAPPED)) {
-        currentlyHoveredElement = target;
-        if (activePopups.has(target)) {
-            hoveredElementData = activePopups.get(target);
+    clearTimeout(hoverTimeout);
+    hoverTimeout = setTimeout(() => {
+        var target = event.target;
+        if (target.classList && target.classList.contains(CONFIG.CLASS_NAMES.WRAPPED)) {
+            currentlyHoveredElement = target;
+            if (activePopups.has(target)) {
+                hoveredElementData = activePopups.get(target);
+            }
         }
-    }
+    }, 50); // Small delay to reduce CPU usage
 });
 
 document.addEventListener('mouseout', function(event) {
@@ -757,6 +781,8 @@ document.addEventListener('mouseout', function(event) {
 });
 
 // ==================== Keyboard Handlers ====================
+
+// Handler for regular numbers - ONLY works for currently hovered word
 document.addEventListener('keydown', function(event) {
     if (!settings.extensionEnabled) return;
     
@@ -776,6 +802,15 @@ document.addEventListener('keydown', function(event) {
         var definition = formatSingleDefinition(data[index], index + 1);
         copyToClipboard(definition);
         
+        // 🔥 ANKI EVENT: Dispatch event for Anki
+        document.dispatchEvent(new CustomEvent('anki:definitionCopied', {
+            detail: { 
+                definition: definition,
+                word: data[index].word,
+                root: data[index].root
+            }
+        }));
+        
         var rows = document.querySelectorAll('.' + CONFIG.CLASS_NAMES.DEFINITION_ROW);
         for (var i = 0; i < rows.length; i++) {
             rows[i].classList.remove('selected');
@@ -791,6 +826,7 @@ document.addEventListener('keydown', function(event) {
     }
 });
 
+// Handler for Ctrl+Alt+Numbers
 document.addEventListener('keydown', function(event) {
     if (!settings.extensionEnabled) return;
     
@@ -810,6 +846,15 @@ document.addEventListener('keydown', function(event) {
         
         var definition = formatSingleDefinition(data[index], index + 1);
         copyToClipboard(definition);
+        
+        // 🔥 ANKI EVENT: Dispatch event for Anki
+        document.dispatchEvent(new CustomEvent('anki:definitionCopied', {
+            detail: { 
+                definition: definition,
+                word: data[index].word,
+                root: data[index].root
+            }
+        }));
         
         var rows = document.querySelectorAll('.' + CONFIG.CLASS_NAMES.DEFINITION_ROW);
         for (var i = 0; i < rows.length; i++) {
@@ -906,6 +951,9 @@ function setupTooltipsForWrappedElements() {
     for (var i = 0; i < elems.length; i++) {
         tooltipObserver.observe(elems[i]);
     }
+    
+    // Start popup cleanup monitoring
+    setupPopupCleanup();
 }
 
 function createTooltipForElement(elem) {
@@ -914,12 +962,25 @@ function createTooltipForElement(elem) {
     lazyLookup(elem.textContent).then(function(data) {
         var content = createDefinitionsHTML(elem.textContent, data);
         
+        // Option 1: Click on word copies all definitions
         elem.addEventListener('click', function(event) {
             event.preventDefault();
             event.stopPropagation();
-            copyToClipboard(formatAllDefinitions(elem.textContent, data));
+            
+            var allDefinitions = formatAllDefinitions(elem.textContent, data);
+            copyToClipboard(allDefinitions);
+            
+            // 🔥 ANKI EVENT: Dispatch event for Anki
+            document.dispatchEvent(new CustomEvent('anki:wordClicked', {
+                detail: { 
+                    definition: allDefinitions,
+                    word: elem.textContent,
+                    allData: data
+                }
+            }));
         });
         
+        // Create the tooltip
         elem._opentip = new Opentip(elem, content, { 
             style: 'glass',
             showOn: 'mouseover',
@@ -927,14 +988,16 @@ function createTooltipForElement(elem) {
             tipJoint: 'top'
         });
         
+        // Store element data in activePopups
         activePopups.set(elem, {
             word: elem.textContent,
-            data: data
+            data: data,
+            timestamp: Date.now()
         });
     });
 }
 
-// ==================== Initialization ====================
+// ==================== Initialize ====================
 function initialize() {
     loadSettings().then(function() {
         console.log('Running on:', isFirefox ? 'Firefox' : (isChrome ? 'Chrome' : 'Unknown browser'));
