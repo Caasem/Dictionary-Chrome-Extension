@@ -1,4 +1,4 @@
-# arabic-dict-chrome-firefox-anki
+# Arabic Dictionary with Anki
 
 *Please note the following was generated with the help of AI. I don't really know how to code - but it (mostly) works!*
 
