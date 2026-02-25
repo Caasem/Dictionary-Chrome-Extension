@@ -1,6 +1,13 @@
 # arabic-dict-chrome-firefox-anki
-Arabic Dictionary Chrome/Firefox extension based on open-source dictionary data with Anki Connect integration
-Just hover your cursor over an Arabic word and the translation pops up!
+Arabic Dictionary Chrome/Firefox extension based on open-source dictionary data with Anki Connect integration.
+
+Just hover your cursor over an Arabic word and the translation pops up! Left-click to save the definition to your clipboard.
+
+Anki Workflow:
+1. Left-click the word (Saved to your clipboard).
+2. Highlight sentence word is found in.
+3. Press Ctrl + Space.
+4. Saved to Anki!
 
 # Update
 I've somehow managed, using DeepSeek AI, to update this extension. I will list the changes that were undertaken soon. The most important apparently, according to the AI himself are: copy-paste options for individual or all definitions, data structure optimisations, caching system, and DOM processing optimisations. Some of these bigger changes are meant to help with CPU and maybe memory usage I think. Admittedly I unfortunately don't know what most of this all means - but the extension (mostly) does at least work!
@@ -9,12 +16,6 @@ I've somehow managed, using DeepSeek AI, to update this extension. I will list t
 ![screenshot-image](https://github.com/haikalzain/arabic-dict-chrome/blob/master/images/screenshot.png)
 
 ## Update Screenshot
-
-Anki Workflow:
-1. Left-click the word (Saved to your clipboard)
-2. Highlight sentence
-3. Press Ctrl + Space
-4. Saved to Anki
 
 <img width="623" height="473" alt="image" src="https://github.com/user-attachments/assets/f9f53305-7ec5-4e02-b044-7becead2571f" />
 <img width="583" height="374" alt="image" src="https://github.com/user-attachments/assets/36ff3440-c8d2-4c06-aa84-f9f746f9f756" />
