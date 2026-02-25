@@ -15,13 +15,18 @@ Just hover your cursor over an Arabic word and the translation pops up! Left-cli
 
 ## ✨ New Features (2024 Update)
 
-I've somehow managed, using DeepSeek AI, to completely overhaul this extension. Here are the major improvements:
+I've somehow managed, using DeepSeek AI, to update this extension. Here are the major improvements:
+
+### Anki Integration (New!)
+- **Offline queue system** - Cards save locally when Anki isn't running, auto-sync when available (dodgy, might not work)
+- **Smart shortcuts**:
+  - `Ctrl + Space` - Quick save (skips panel when both fields ready)
+  - `Ctrl + Shift + B` - Open editing panel
+  - `Ctrl + Shift + Q` - Force queue card (bypass Anki check)
 
 ### Core Functionality
 - **Copy individual definitions** - Press number keys 1-9 to copy specific definitions
 - **Copy all definitions** - Click any word to copy all definitions at once
-- **Visual feedback** - Green notifications confirm what was copied
-- **Precise hover tracking** - No more copying from the wrong word
 
 ### Performance Optimizations
 - **Caching system** - Frequently looked-up words load instantly
@@ -30,17 +35,6 @@ I've somehow managed, using DeepSeek AI, to completely overhaul this extension. 
 - **Lazy tooltip creation** - Only creates tooltips for visible words
 - **Memory management** - Cache size limiting prevents memory leaks
 
-
-### Anki Integration (New!)
-- **Offline queue system** - Cards save locally when Anki isn't running, auto-sync when available
-- **Smart shortcuts**:
-  - `Ctrl + Space` - Quick save (skips panel when both fields ready)
-  - `Ctrl + Shift + B` - Open editing panel
-  - `Ctrl + Shift + Q` - Force queue card (bypass Anki check)
-- **Remembers your last used deck** - Set once, use forever
-- **Queue status** - Panel shows pending cards with sync button
-- **Auto-retry** - Failed cards retry every 15 minutes
-- **Visual notifications** - Green = success, 📦 = queued, 🔄 = syncing
 
 ### What Users Will Notice
 
