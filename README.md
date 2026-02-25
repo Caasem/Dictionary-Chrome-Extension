@@ -1,5 +1,5 @@
-# arabic-dict-chrome
-Arabic Dictionary Chrome extension based on open-source dictionary data.
+# arabic-dict-chrome-firefox
+Arabic Dictionary Chrome/Firefox extension based on open-source dictionary data.
 Just hover your cursor over an Arabic word and the translation pops up!
 
 # Update
