@@ -21,9 +21,6 @@ Anki Workflow:
 <img width="596" height="492" alt="image" src="https://github.com/user-attachments/assets/e42adad7-4420-43b7-9879-14351943a15e" />
 
 
-Get it on the Chrome Web Store: 
-https://chrome.google.com/webstore/detail/arabic-dictionary/loipjegagmfjcbofhmigjemdfcahcggm/reviews?hl=en
-
 ## Usage
 
 Arabic Dictionary is available for download via the Chrome Web Store. Alternatively, if you wish to tinker around with the code, 
