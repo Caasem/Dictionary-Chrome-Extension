@@ -8,7 +8,7 @@ Just hover your cursor over an Arabic word and the translation pops up! Click to
 
 https://github.com/user-attachments/assets/0e92c0e8-8852-433c-b5ec-3ee0529edd4d
 
-## 🎯 Recommended Anki Workflow
+## Recommended Anki Workflow
 1. **Hover** over an Arabic word → see definitions instantly
 2. **Press a number key** (1-9) to copy a specific definition, or **left-click** to copy all definitions
 3. **Highlight** the sentence containing the word
@@ -21,7 +21,7 @@ Need to edit? Press `Ctrl + Shift + B` to open the full editing panel first.
 
 I somehow managed, with DeepSeek AI's help, to add a bunch of new features. Most of them even work!
 
-### 📚 Anki Integration
+### Anki Integration
 - **Offline queue system** - Cards save locally when Anki isn't running, auto-sync when available (works most of the time!)
 - **Smart shortcuts**:
   - `Ctrl + Space` - Quick save (when both fields ready)
@@ -31,11 +31,11 @@ I somehow managed, with DeepSeek AI's help, to add a bunch of new features. Most
 - **Fallback button** - Appears when the + icon can't (for tricky websites)
 - **Remembers your last used deck** - Set it once and forget it
 
-### 🎯 Core Improvements
+### Core Improvements
 - **Copy individual definitions** - Press 1-9 to copy specific meanings
 - **Copy all definitions** - Click any word to copy everything at once
 
-### ⚡ Performance
+### Performance
 - **Caching system** - Frequently looked-up words load instantly
 - **Chunked DOM processing** - Pages with hundreds of words no longer freeze
 - **Debounced events** - Smoother scrolling, less CPU usage
@@ -43,7 +43,7 @@ I somehow managed, with DeepSeek AI's help, to add a bunch of new features. Most
 - **Popup cleanup** - Frees memory when tooltips close
 - I have no idea if that makes it better or worse ^^
   
-## 📊 What You'll Notice
+## What You'll Notice
 
 | Before | After |
 |--------|-------|
@@ -56,11 +56,11 @@ I somehow managed, with DeepSeek AI's help, to add a bunch of new features. Most
 | Fixed popup size | **Adjustable font, width, height** |
 | Light mode only | **Dark mode support** |
 
-## 🖼️ Screenshots
+## Screenshots
 
 *Insert your screenshots here*
 
-## 📦 Installation
+## Installation
 
 Arabic Dictionary is available for download via the Chrome Web Store. Alternatively, if you wish to tinker around with the code:
 
@@ -97,7 +97,7 @@ The extension talks to Anki-Connect (a separate add-on you install in Anki). Whe
 - Some websites (Gmail, Google Docs) don't play nice with the + icon
 - Duplicate cards? Anki blocks them by default (we're working on an option)
 
-## 🗺️ Wishlist
+## Wishlist
 - [ ] Actually fix the queue system so it's not "dodgy"
 - [ ] Option to allow duplicate cards
 - [ ] Word history tracking
@@ -106,7 +106,7 @@ The extension talks to Anki-Connect (a separate add-on you install in Anki). Whe
 - [ ] Shared community decks
 - [ ] Better website compatibility
 
-## 🙏 Credits
+## Credits
 - Dictionary data: Linguistic Data Consortium (GPLv2)
 - Anki-Connect: Foosoft
 - Endless patience: DeepSeek AI (who wrote most of this while I asked questions)
