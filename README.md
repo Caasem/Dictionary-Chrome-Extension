@@ -9,7 +9,17 @@ I've somehow managed, using DeepSeek AI, to update this extension. I will list t
 ![screenshot-image](https://github.com/haikalzain/arabic-dict-chrome/blob/master/images/screenshot.png)
 
 ## Update Screenshot
-<img width="838" height="552" alt="image" src="https://github.com/user-attachments/assets/5ff07214-e82a-4fb0-b3f3-c5e2738edf11" />
+
+Anki Workflow:
+1. Left-click the word (Saved to your clipboard)
+2. Highlight sentence
+3. Press Ctrl + Space
+4. Saved to Anki
+
+<img width="623" height="473" alt="image" src="https://github.com/user-attachments/assets/f9f53305-7ec5-4e02-b044-7becead2571f" />
+<img width="583" height="374" alt="image" src="https://github.com/user-attachments/assets/36ff3440-c8d2-4c06-aa84-f9f746f9f756" />
+<img width="596" height="492" alt="image" src="https://github.com/user-attachments/assets/e42adad7-4420-43b7-9879-14351943a15e" />
+
 
 Get it on the Chrome Web Store: 
 https://chrome.google.com/webstore/detail/arabic-dictionary/loipjegagmfjcbofhmigjemdfcahcggm/reviews?hl=en
