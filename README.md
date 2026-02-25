@@ -41,7 +41,7 @@ I somehow managed, with DeepSeek AI's help, to add a bunch of new features. Most
 - **Debounced events** - Smoother scrolling, less CPU usage
 - **Smaller memory footprint** - Cache limits prevent leaks
 - **Popup cleanup** - Frees memory when tooltips close
-- I have no idea if that makes it better or worse ^^
+- I have no idea if all this makes it better or worse ^^
   
 ## What You'll Notice
 
