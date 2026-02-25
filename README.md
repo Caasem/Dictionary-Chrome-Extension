@@ -6,7 +6,7 @@ Arabic Dictionary Chrome/Firefox extension based on open-source dictionary data 
 
 Just hover your cursor over an Arabic word and the translation pops up! Left-click to save the definition to your clipboard.
 
-## Anki Workflow:
+## Recommended Anki Workflow:
 1. Hover over an Arabic word
 2. Press a number key (1-9) to copy a specific definition, or left-click to copy all definitions
 3. Highlight the sentence containing the word
