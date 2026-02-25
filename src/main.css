@@ -1,20 +1,62 @@
-.opentip-definition-table-31245{
+/* Base styles */
+.opentip-definition-table-31245 {
     border-collapse: separate;
     font-size: 14px;
     font-family: Tahoma;
     line-height: 22px;
     border-spacing: 0px;
     direction: ltr;
+    width: 100%;
 }
-.opentip-definition-container-31245{
-    #overflow: auto;
-    #max-height: 500px;
+
+.opentip-definition-container-31245 {
+    overflow: auto;
+    max-height: 500px;
+    transition: all 0.2s ease;
 }
-.opentip-definition-table-31245 th{
+
+/* Dark mode styles - these will be applied via JavaScript */
+.dark-mode-31245 .opentip-definition-container-31245 {
+    background-color: #2d2d2d !important;
+    color: #e0e0e0 !important;
+    border: 1px solid #444 !important;
+}
+
+.dark-mode-31245 .opentip-definition-table-31245 th {
+    color: #ccc !important;
+    border-bottom: 1px solid #444 !important;
+}
+
+.dark-mode-31245 .opentip-definition-table-31245 td {
+    color: #e0e0e0 !important;
+}
+
+.dark-mode-31245 .opentip-definition-number-31245 {
+    color: #777 !important;
+}
+
+.dark-mode-31245 .definition-row-31245:hover {
+    background-color: #3d3d3d !important;
+}
+
+.dark-mode-31245 .definition-row-31245.selected {
+    background-color: #1e3a5f !important;
+}
+
+.dark-mode-31245 .keyboard-hint-31245 {
+    color: #aaa !important;
+    border-bottom-color: #444 !important;
+}
+
+/* Table styles */
+.opentip-definition-table-31245 th {
     text-align: center;
     padding: 10px;
+    border-bottom: 1px solid #ddd;
 }
-.opentip-definition-table-31245 td, th{
+
+.opentip-definition-table-31245 td, 
+.opentip-definition-table-31245 th {
     font-size: 14px;
     line-height: 20px;
     direction: ltr;
@@ -23,12 +65,72 @@
     padding: 7px;
     font-weight: normal;
 }
-.opentip-definition-table-31245 .arabic-text-31245{
-    font-family: initial;
+
+/* Arabic text styles */
+.opentip-definition-table-31245 .arabic-text-31245 {
+    font-family: 'Traditional Arabic', 'Scheherazade', 'Amiri', 'Times New Roman', serif;
     font-size: 18px;
     direction: rtl;
+    text-align: right;
 }
-.opentip-container{
+
+/* Keyboard hint */
+.keyboard-hint-31245 {
+    color: #888;
+    font-size: 0.8em;
+    font-style: italic;
+    padding: 4px 8px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 4px;
+}
+
+/* Definition number */
+.definition-number-31245 {
+    color: #999;
+    font-size: 0.9em;
+    font-family: monospace;
+    padding-right: 8px;
+    text-align: right;
+    width: 30px;
+}
+
+/* Row hover */
+.definition-row-31245:hover {
+    background-color: #f5f5f5;
+    cursor: pointer;
+}
+
+.definition-row-31245:hover .definition-number-31245 {
+    color: #333;
+    font-weight: bold;
+}
+
+/* Selected row */
+.definition-row-31245.selected {
+    background-color: #e3f2fd;
+}
+
+/* Opentip container */
+.opentip-container {
     max-width: 1000px;
 }
 
+/* Extension disabled state */
+.extension-disabled .arabic-wrapped-31245 {
+    cursor: default !important;
+    background-color: transparent !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+    .opentip-definition-container-31245 {
+        max-width: 90vw;
+    }
+    
+    .opentip-definition-table-31245 td,
+    .opentip-definition-table-31245 th {
+        padding: 5px;
+        font-size: 12px;
+    }
+}
