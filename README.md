@@ -13,7 +13,7 @@ Just hover your cursor over an Arabic word and the translation pops up! Left-cli
 4. Press `Ctrl + Space` for quick save, or `Ctrl + Shift + B` to open the editing panel
 5. Card is saved to your last used Anki deck (or queues automatically if Anki is closed)
 
-## ✨ New Features (2024 Update)
+## ✨ New Features (2026 Update)
 
 I've somehow managed, using DeepSeek AI, to update this extension. Here are the major improvements:
 
