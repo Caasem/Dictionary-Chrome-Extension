@@ -7,7 +7,7 @@ Arabic Dictionary Chrome/Firefox extension based on open-source dictionary data 
 Just hover your cursor over an Arabic word and the translation pops up! Left-click to save the definition to your clipboard.
 
 
-https://github.com/user-attachments/assets/04adb983-7e4d-4894-9586-5637571d75cb
+https://github.com/user-attachments/assets/0e92c0e8-8852-433c-b5ec-3ee0529edd4d
 
 
 ## Recommended Anki Workflow:
